@@ -10,6 +10,7 @@ public class Main {
         Scanner sentense = new Scanner(System.in);
         String words = sentense.nextLine();
         ArrayList<String> check = new ArrayList<>(words.length());
+        System.out.println("Result:");
         for (String word : words.split(" ")) {
             if (check.indexOf(word) == -1) {
                 check.add(word);
