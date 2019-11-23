@@ -1,13 +1,33 @@
 package com.company;
 //диаграммы Закмана
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class University_class {
 
     public static void main(String[] args){
+        ArrayList<Bachelor> StudBach = new ArrayList<>();
+        ArrayList<MasterStudent> StudMast = new ArrayList<>();
+        ArrayList<Teacher> Teach = new ArrayList<>();
+        Boolean start = true;
+        while (start) {
+            System.out.println("Выберите пункт меню:\n 1.Добавить студента/магистра\n 2.Добавить преподавателя\n 3.Посмотреть всех студентов\n 4.Посмотреть всех преподавателей\n 5.Выход");
+            Scanner choose  =new Scanner(System.in);
+            switch (choose.toString()) {
+                case ("1"):
+                    AddNewStudent();
+                    break;
+                case ("1"):
+                    AddNewStudent();
+                    break;
+                case ("1"):
+                    AddNewStudent();
+                    break;
+                case ("Выход"):
+                    start = false;
+                    break;
+            }
+        }
         Bachelor vasya = new Bachelor("Vasya Pupkin", 2, 21);
-//        System.out.println(vasya.getGrade());
         for (Integer i=0;i<2;i++){
              vasya.addStudentShedule();
         }
@@ -19,6 +39,7 @@ public class University_class {
         MaryIvanna.getTeacherShedule("Saturday");
     }
 }
+
 
 class Teacher extends Shedule{
     private String name;
@@ -87,15 +108,7 @@ class Student extends Shedule{
                     System.out.println(elem.getValue());
                 }
         }
-//            System.out.println(day_name);
-//            for (Map.entry(String, HashMap) el :elem.get(1)){
-//                if (day_name.equals("all") || day_name.equals("All")) {
-//                    System.out.println(elem.get(1));
-//                } else if (elem.getDay().equals(day_name)) {
-//                    System.out.println(elem.getLesson());
-//                }
-//            }
-        }
+    }
     protected String getName() {
         return this.name;
     }
