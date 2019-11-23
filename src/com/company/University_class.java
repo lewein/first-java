@@ -1,94 +1,116 @@
 package com.company;
-
+//диаграммы Закмана
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class University_class {
 
     public static void main(String[] args){
-        Bachelor vasya = new Bachelor("Vasya Pupkin", 2);
-        System.out.println(vasya.getGrade());
-
+        Bachelor vasya = new Bachelor("Vasya Pupkin", 2, 21);
+//        System.out.println(vasya.getGrade());
+        for (Integer i=0;i<2;i++){
+             vasya.addStudentShedule();
+        }
+        System.out.println("Choose Lessons day or write All");
+        Scanner day = new Scanner(System.in);
+        vasya.getStudentShedule(day.toString());
+        Teacher MaryIvanna = new Teacher("Mary Ivanna");
+        MaryIvanna.addTeacherShedule();
+        MaryIvanna.getTeacherShedule("Saturday");
     }
 }
 
-class Teacher {
+class Teacher extends Shedule{
     private String name;
-    private ArrayList<Shedule> TeacherShedule = new ArrayList<>(0);
+    private ArrayList<Map> TeacherShedule = new ArrayList<>(0);
+    Teacher(String name) {
+        this.name = name;
+    }
     protected void getTeacherShedule(String day_name) {
-        for (Shedule elem : this.TeacherShedule) {
-            if (elem.getDay().equals(day_name)) {
-                System.out.println(elem.getLesson());
+        for (Map.Entry elem : getLesson().entrySet()) {
+            if (day_name.equals("all") || day_name.equals("All")) {
+                System.out.println(elem.getValue());
+            } else if (elem.getKey().equals(day_name)){
+                System.out.println(elem.getValue());
             }
         }
     }
     protected String getName() {
         return this.name;
     }
+    protected void addTeacherShedule() {
+        this.TeacherShedule.add(setShedule());
+    }
 }
 
 class Shedule {
-    private String day;
-    private Map<String, String> lesson = new HashMap<> (7);
-    protected void setShedule(String d, Map<String, String> s) {
-        this.day = d;
-        for (Map.Entry entry : s.entrySet()) {
-            this.lesson.put(entry.getKey().toString(), entry.getValue().toString());
+    private Map<String, ArrayList<Map>> lesson = new HashMap<>(4);
+    protected Map<String, ArrayList<Map>> setShedule() {
+        System.out.println("Введите день, а затем расписание на день в формате <Номер, пара>");
+        Scanner res = new Scanner(System.in);
+        String day = res.nextLine();
+        ArrayList<Map> list = new ArrayList<>();
+        for (Integer i=0; i<4; i++) {
+            Scanner pair = new Scanner(System.in);
+            String[] text = pair.nextLine().split(",");
+            Map<String, String> k = new HashMap<>();
+            k.put(text[0], text[1]);
+            list.add(k);
         }
-
+        return (Map<String, ArrayList<Map>>) lesson.put(day, list);
     }
-    protected Map<String, String> getLesson() {
+    protected Map<String, ArrayList<Map>> getLesson() {
         return this.lesson;
     }
-    protected String getDay() {
-        return this.day;
-    }
-    public void setDay(String d) {
-        this.day = d;
-    }
+
 }
 
 class Student extends Shedule{
     private String name;
     private Integer kurs;
-    private ArrayList<Shedule> StudentShedule = new ArrayList<>(5);
-    Student (String n, Integer k) {
+    private Integer group;
+    private ArrayList<Map> StudentShedule = new ArrayList<>();
+    Student (String n, Integer k, Integer g) {
         name = n;
         kurs = k;
-    }
-    protected void getStudentShedule(String day_name) {
-        for (Shedule elem : this.StudentShedule) {
-            if (day_name.equals("all") || day_name.equals("All")) {
-                System.out.println(elem.getLesson());
-            } else if (elem.getDay().equals(day_name)) {
-                System.out.println(elem.getLesson());
-            }
-        }
+        group = g;
     }
     protected void addStudentShedule() {
-        System.out.println("Enter day and day`s lessons");
-        Scanner sentense = new Scanner(System.in);
-        String day = sentense.nextLine();
-        HashMap<String, String> shed = new HashMap<>();
-        for (int i=0;i<4;i++) {
-            Scanner les = new Scanner(System.in);
-            shed.put(les.nextLine().split(" ")[0].toString(), les.nextLine().split(" ")[1]);
-        }
-//        this.StudentShedule.setShedule(day, shed);
-
+        this.StudentShedule.add(setShedule());
     }
+    protected void getStudentShedule(String day_name) {
+        for (Map.Entry elem : getLesson().entrySet()) {
+            if (day_name.equals("all") || day_name.equals("All")) {
+                    System.out.println(elem.getValue());
+                }
+            else if (elem.getKey().equals(day_name)) {
+                    System.out.println(elem.getValue());
+                }
+        }
+//            System.out.println(day_name);
+//            for (Map.entry(String, HashMap) el :elem.get(1)){
+//                if (day_name.equals("all") || day_name.equals("All")) {
+//                    System.out.println(elem.get(1));
+//                } else if (elem.getDay().equals(day_name)) {
+//                    System.out.println(elem.getLesson());
+//                }
+//            }
+        }
     protected String getName() {
         return this.name;
-
     }
     protected Integer getKurs(){
         return this.kurs;
+    }
+    protected Integer getGroup() {
+        return this.group;
     }
 }
 
 class Bachelor extends Student {
     private String grade = "Bachelor";
-    Bachelor(String n, Integer k) {
-        super(n, k);
+    Bachelor(String n, Integer k, Integer g) {
+        super(n, k, g);
     }
     protected String getGrade(){
         return this.grade;
@@ -97,8 +119,8 @@ class Bachelor extends Student {
 
 class MasterStudent extends Student {
     private String grade = "Master Student";
-    MasterStudent( String n, Integer k) {
-        super(n, k);
+    MasterStudent( String n, Integer k, Integer g) {
+        super(n, k, g);
     }
     protected String getGrade(){
         return this.grade;
