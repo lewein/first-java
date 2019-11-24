@@ -10,33 +10,56 @@ public class University_class {
         ArrayList<Teacher> Teach = new ArrayList<>();
         Boolean start = true;
         while (start) {
-            System.out.println("Выберите пункт меню:\n 1.Добавить студента/магистра\n 2.Добавить преподавателя\n 3.Посмотреть всех студентов\n 4.Посмотреть всех преподавателей\n 5.Выход");
+            System.out.println("Выберите пункт меню:\n 1.Добавить студента/магистра\n 2.Добавить преподавателя\n 3.Посмотреть студентов\n 4.Посмотреть преподавателей\n 5.Выход");
             Scanner choose  =new Scanner(System.in);
             switch (choose.toString()) {
                 case ("1"):
-                    AddNewStudent();
+                    AddNewStudent(StudBach, StudMast);
                     break;
-                case ("1"):
-                    AddNewStudent();
+                case ("2"):
+                    AddNewTeacher(Teach);
                     break;
-                case ("1"):
-                    AddNewStudent();
+                case ("3"):
+                    ViewStudents(StudBach, StudMast);
                     break;
-                case ("Выход"):
+                case ("4"):
+                    ViewTeachers(Teach);
+                    break;
+                case ("5"):
                     start = false;
                     break;
             }
         }
-        Bachelor vasya = new Bachelor("Vasya Pupkin", 2, 21);
-        for (Integer i=0;i<2;i++){
-             vasya.addStudentShedule();
+//        Bachelor vasya = new Bachelor("Vasya Pupkin", 2, 21);
+//        for (Integer i=0;i<2;i++){
+//             vasya.addStudentShedule();
+//        }
+//        System.out.println("Choose Lessons day or write All");
+//        Scanner day = new Scanner(System.in);
+//        vasya.getStudentShedule(day.toString());
+//        Teacher MaryIvanna = new Teacher("Mary Ivanna");
+//        MaryIvanna.addTeacherShedule();
+//        MaryIvanna.getTeacherShedule("Saturday");
+    }
+    private static void AddNewStudent(ArrayList Bach, ArrayList Mast) {
+        System.out.println("Укажите степень студента(Бакалавр, Магистр)");
+        Scanner step = new Scanner(System.in);
+        if (step.toString()=="Бакалавр") {
+
+        } else if (step.toString()=="Магистр") {
+
+        } else {
+            System.out.print("Неверная степень");
         }
-        System.out.println("Choose Lessons day or write All");
-        Scanner day = new Scanner(System.in);
-        vasya.getStudentShedule(day.toString());
-        Teacher MaryIvanna = new Teacher("Mary Ivanna");
-        MaryIvanna.addTeacherShedule();
-        MaryIvanna.getTeacherShedule("Saturday");
+    }
+    private static void AddNewTeacher(ArrayList Teach) {
+
+    }
+    private static void ViewStudents(ArrayList Bach, ArrayList Mast) {
+
+    }
+    private static void ViewTeachers(ArrayList Teach) {
+
     }
 }
 
@@ -139,3 +162,4 @@ class MasterStudent extends Student {
         return this.grade;
     }
 }
+
