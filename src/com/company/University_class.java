@@ -11,8 +11,11 @@ public class University_class {
         Boolean start = true;
         while (start) {
             System.out.println("Выберите пункт меню:\n 1.Добавить студента/магистра\n 2.Добавить преподавателя\n 3.Посмотреть студентов\n 4.Посмотреть преподавателей\n 5.Выход");
-            Scanner choose  =new Scanner(System.in);
-            switch (choose.toString()) {
+            Scanner choose = new Scanner(System.in);
+            String res = choose.nextLine();
+            choose.close();
+//            System.out.println("wait");
+            switch (res) {
                 case ("1"):
                     AddNewStudent(StudBach, StudMast);
                     break;
@@ -41,24 +44,58 @@ public class University_class {
 //        MaryIvanna.addTeacherShedule();
 //        MaryIvanna.getTeacherShedule("Saturday");
     }
-    private static void AddNewStudent(ArrayList Bach, ArrayList Mast) {
+    private static void AddNewStudent(ArrayList<Bachelor> Bach, ArrayList<MasterStudent> Mast) {
         System.out.println("Укажите степень студента(Бакалавр, Магистр)");
         Scanner step = new Scanner(System.in);
-        if (step.toString()=="Бакалавр") {
-
-        } else if (step.toString()=="Магистр") {
-
+        String res = step.nextLine();
+        if (res.toLowerCase()=="бакалавр") {
+            System.out.print("Введите <Имя Фамилия,курс,группа>");
+            String[] new_data = (new Scanner(System.in)).nextLine().split(",");
+            Bachelor person = new Bachelor(new_data[0].toLowerCase(), Integer.valueOf(new_data[1]), Integer.valueOf(new_data[2]));
+            System.out.print("Хотите установить расписание?");
+            Scanner ans = new Scanner(System.in);
+            if (ans.nextLine().toLowerCase().equals("да")) {
+                ans.close();
+                person.addStudentShedule();
+            }
+            Bach.add(person);
+            step.close();
+        } else if (res=="магистр") {
+            System.out.print("Введите <Имя Фамилия,курс,группа>");
+            String[] new_data = (new Scanner(System.in)).toString().split(",");
+            MasterStudent person = new MasterStudent(new_data[0], Integer.valueOf(new_data[1]), Integer.valueOf(new_data[2]));
+            System.out.print("Хотите установить расписание?");
+            Scanner ans = new Scanner(System.in);
+            if (ans.nextLine().toLowerCase().equals("да")) {
+                person.addStudentShedule();
+                ans.close();
+            }
+            Mast.add(person);
+            step.close();
         } else {
-            System.out.print("Неверная степень");
+            System.out.println("Неверная степень");
+            step.close();
         }
     }
-    private static void AddNewTeacher(ArrayList Teach) {
-
+    private static void AddNewTeacher(ArrayList<Teacher> Teach) {
+        System.out.println("Введите имя преподавателя");
+        String data = (new Scanner(System.in)).nextLine().toLowerCase();
+        Teacher person = new Teacher(data);
+        System.out.print("Хотите установить расписание?");
+        Scanner res = new Scanner(System.in);
+        if (res.toString().toLowerCase().equals("да")) {
+            person.addTeacherShedule();
+        }
+        Teach.add(person);
     }
-    private static void ViewStudents(ArrayList Bach, ArrayList Mast) {
+    private static void ViewStudents(ArrayList<Bachelor> Bach, ArrayList<MasterStudent> Mast) {
+        for (Bachelor elem : Bach) {
+            System.out.println("wait");
+        }
 
+        System.out.println("wait");
     }
-    private static void ViewTeachers(ArrayList Teach) {
+    private static void ViewTeachers(ArrayList<Teacher> Teach) {
 
     }
 }
@@ -66,12 +103,12 @@ public class University_class {
 
 class Teacher extends Shedule{
     private String name;
-    private ArrayList<Map> TeacherShedule = new ArrayList<>(0);
+    private ArrayList<Map<String, ArrayList<Map>>> TeacherShedule = new ArrayList<>(0);
     Teacher(String name) {
         this.name = name;
     }
     protected void getTeacherShedule(String day_name) {
-        for (Map.Entry elem : getLesson().entrySet()) {
+        for (Map.Entry<String, ArrayList<Map<String, String>>> elem : getLesson().entrySet()) {
             if (day_name.equals("all") || day_name.equals("All")) {
                 System.out.println(elem.getValue());
             } else if (elem.getKey().equals(day_name)){
@@ -88,12 +125,12 @@ class Teacher extends Shedule{
 }
 
 class Shedule {
-    private Map<String, ArrayList<Map>> lesson = new HashMap<>(4);
+    private Map<String, ArrayList<Map<String, String>>> lesson = new HashMap<String, ArrayList<Map<String, String>>>(4);
     protected Map<String, ArrayList<Map>> setShedule() {
         System.out.println("Введите день, а затем расписание на день в формате <Номер, пара>");
         Scanner res = new Scanner(System.in);
         String day = res.nextLine();
-        ArrayList<Map> list = new ArrayList<>();
+        ArrayList<Map<String, String>> list = new ArrayList<>();
         for (Integer i=0; i<4; i++) {
             Scanner pair = new Scanner(System.in);
             String[] text = pair.nextLine().split(",");
@@ -103,7 +140,7 @@ class Shedule {
         }
         return (Map<String, ArrayList<Map>>) lesson.put(day, list);
     }
-    protected Map<String, ArrayList<Map>> getLesson() {
+    protected Map<String, ArrayList<Map<String, String>>> getLesson() {
         return this.lesson;
     }
 
@@ -113,7 +150,7 @@ class Student extends Shedule{
     private String name;
     private Integer kurs;
     private Integer group;
-    private ArrayList<Map> StudentShedule = new ArrayList<>();
+    private ArrayList<Map<String, ArrayList<Map>>> StudentShedule = new ArrayList<Map<String, ArrayList<Map>>>();
     Student (String n, Integer k, Integer g) {
         name = n;
         kurs = k;
@@ -123,7 +160,7 @@ class Student extends Shedule{
         this.StudentShedule.add(setShedule());
     }
     protected void getStudentShedule(String day_name) {
-        for (Map.Entry elem : getLesson().entrySet()) {
+        for (Map.Entry<String, ArrayList<Map<String, String>>> elem : getLesson().entrySet()) {
             if (day_name.equals("all") || day_name.equals("All")) {
                     System.out.println(elem.getValue());
                 }
