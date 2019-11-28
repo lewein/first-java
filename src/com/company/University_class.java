@@ -108,7 +108,7 @@ public class University_class {
 class Teacher extends Shedule{
     private String name;
     private ArrayList<Map<String, ArrayList<Map>>> TeacherShedule = new ArrayList<>(0);
-    Teacher(String name) {
+    public Teacher(String name) {
         this.name = name;
     }
     protected void getTeacherShedule(String day_name) {
@@ -156,7 +156,7 @@ class Student extends Shedule{
     private Integer kurs;
     private Integer group;
     private ArrayList<Map<String, ArrayList<Map>>> StudentShedule = new ArrayList<Map<String, ArrayList<Map>>>();
-    Student (String n, Integer k, Integer g) {
+    public Student (String n, Integer k, Integer g) {
         name = n;
         kurs = k;
         group = g;
