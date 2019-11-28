@@ -8,7 +8,7 @@ public class University_class {
         ArrayList<Bachelor> StudBach = new ArrayList<>();
         ArrayList<MasterStudent> StudMast = new ArrayList<>();
         ArrayList<Teacher> Teach = new ArrayList<>();
-        Boolean start = true;
+        boolean start = true;
         while (start) {
             System.out.println("Выберите пункт меню:\n 1.Добавить бакалавра/магистра\n 2.Добавить преподавателя\n 3.Посмотреть студентов\n 4.Посмотреть преподавателей\n 5.Выход");
             Scanner choose = new Scanner(System.in);
@@ -31,16 +31,6 @@ public class University_class {
                     break;
             }
         }
-//        Bachelor vasya = new Bachelor("Vasya Pupkin", 2, 21);
-//        for (Integer i=0;i<2;i++){
-//             vasya.addStudentShedule();
-//        }
-//        System.out.println("Choose Lessons day or write All");
-//        Scanner day = new Scanner(System.in);
-//        vasya.getStudentShedule(day.toString());
-//        Teacher MaryIvanna = new Teacher("Mary Ivanna");
-//        MaryIvanna.addTeacherShedule();
-//        MaryIvanna.getTeacherShedule("Saturday");
     }
     private static void AddNewStudent(ArrayList<Bachelor> Bach, ArrayList<MasterStudent> Mast) {
         System.out.println("Укажите степень студента(Бакалавр, Магистр)");
@@ -130,13 +120,13 @@ class Teacher extends Shedule{
 }
 
 class Shedule {
-    private Map<String, ArrayList<Map<String, String>>> lesson = new HashMap<String, ArrayList<Map<String, String>>>(4);
+    private Map<String, ArrayList<Map<String, String>>> lesson = new HashMap<>(4);
     protected Map<String, ArrayList<Map>> setShedule() {
         System.out.println("Введите день, а затем расписание на день в формате <Номер, пара>");
         Scanner res = new Scanner(System.in);
         String day = res.nextLine();
         ArrayList<Map<String, String>> list = new ArrayList<>();
-        for (Integer i=0; i<4; i++) {
+        for (int i = 0; i<4; i++) {
             Scanner pair = new Scanner(System.in);
             String[] text = pair.nextLine().split(",");
             Map<String, String> k = new HashMap<>();
@@ -155,7 +145,7 @@ class Student extends Shedule{
     private String name;
     private Integer kurs;
     private Integer group;
-    private ArrayList<Map<String, ArrayList<Map>>> StudentShedule = new ArrayList<Map<String, ArrayList<Map>>>();
+    private ArrayList<Map<String, ArrayList<Map>>> StudentShedule = new ArrayList<>();
     public Student (String n, Integer k, Integer g) {
         name = n;
         kurs = k;
