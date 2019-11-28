@@ -58,7 +58,7 @@ public class University_class {
             Bach.add(person);
         } else if (res.toLowerCase().equals("магистр")) {
             System.out.println("Введите <Имя Фамилия,курс,группа>");
-            String[] new_data = (new Scanner(System.in)).toString().split(",");
+            String[] new_data = (new Scanner(System.in)).nextLine().split(",");
             MasterStudent person = new MasterStudent(new_data[0], Integer.valueOf(new_data[1]), Integer.valueOf(new_data[2]));
             System.out.println("Хотите установить расписание?");
             Scanner ans = new Scanner(System.in);
@@ -82,11 +82,22 @@ public class University_class {
         Teach.add(person);
     }
     private static void ViewStudents(ArrayList<Bachelor> Bach, ArrayList<MasterStudent> Mast) {
-        for (Bachelor elem : Bach) {
-            System.out.println("wait");
+        Scanner step = new Scanner(System.in);
+        String res = step.nextLine();
+        if (res.toLowerCase().equals("бакалавр")) {
+            for (Bachelor elem : Bach) {
+                System.out.println(elem.getName());
+                System.out.println(elem.getLesson());
+                System.out.println("wait");
+            }
+        } else if (res.toLowerCase().equals("магистр")) {
+            for (MasterStudent elem : Mast) {
+                System.out.println(elem.getName());
+                System.out.println(elem.getLesson());
+                System.out.println("wait");
+            }
+            //        System.out.println("wait");
         }
-
-//        System.out.println("wait");
     }
     private static void ViewTeachers(ArrayList<Teacher> Teach) {
 
