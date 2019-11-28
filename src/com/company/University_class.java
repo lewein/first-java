@@ -10,11 +10,9 @@ public class University_class {
         ArrayList<Teacher> Teach = new ArrayList<>();
         Boolean start = true;
         while (start) {
-            System.out.println("Выберите пункт меню:\n 1.Добавить студента/магистра\n 2.Добавить преподавателя\n 3.Посмотреть студентов\n 4.Посмотреть преподавателей\n 5.Выход");
+            System.out.println("Выберите пункт меню:\n 1.Добавить бакалавра/магистра\n 2.Добавить преподавателя\n 3.Посмотреть студентов\n 4.Посмотреть преподавателей\n 5.Выход");
             Scanner choose = new Scanner(System.in);
             String res = choose.nextLine();
-            choose.close();
-//            System.out.println("wait");
             switch (res) {
                 case ("1"):
                     AddNewStudent(StudBach, StudMast);
@@ -48,40 +46,35 @@ public class University_class {
         System.out.println("Укажите степень студента(Бакалавр, Магистр)");
         Scanner step = new Scanner(System.in);
         String res = step.nextLine();
-        if (res.toLowerCase()=="бакалавр") {
-            System.out.print("Введите <Имя Фамилия,курс,группа>");
+        if (res.toLowerCase().equals("бакалавр")) {
+            System.out.println("Введите <Имя Фамилия,курс,группа>");
             String[] new_data = (new Scanner(System.in)).nextLine().split(",");
             Bachelor person = new Bachelor(new_data[0].toLowerCase(), Integer.valueOf(new_data[1]), Integer.valueOf(new_data[2]));
-            System.out.print("Хотите установить расписание?");
+            System.out.println("Хотите установить расписание?");
             Scanner ans = new Scanner(System.in);
             if (ans.nextLine().toLowerCase().equals("да")) {
-                ans.close();
                 person.addStudentShedule();
             }
             Bach.add(person);
-            step.close();
-        } else if (res=="магистр") {
-            System.out.print("Введите <Имя Фамилия,курс,группа>");
+        } else if (res.toLowerCase().equals("магистр")) {
+            System.out.println("Введите <Имя Фамилия,курс,группа>");
             String[] new_data = (new Scanner(System.in)).toString().split(",");
             MasterStudent person = new MasterStudent(new_data[0], Integer.valueOf(new_data[1]), Integer.valueOf(new_data[2]));
-            System.out.print("Хотите установить расписание?");
+            System.out.println("Хотите установить расписание?");
             Scanner ans = new Scanner(System.in);
             if (ans.nextLine().toLowerCase().equals("да")) {
                 person.addStudentShedule();
-                ans.close();
             }
             Mast.add(person);
-            step.close();
         } else {
             System.out.println("Неверная степень");
-            step.close();
         }
     }
     private static void AddNewTeacher(ArrayList<Teacher> Teach) {
         System.out.println("Введите имя преподавателя");
         String data = (new Scanner(System.in)).nextLine().toLowerCase();
         Teacher person = new Teacher(data);
-        System.out.print("Хотите установить расписание?");
+        System.out.println("Хотите установить расписание?");
         Scanner res = new Scanner(System.in);
         if (res.toString().toLowerCase().equals("да")) {
             person.addTeacherShedule();
@@ -93,7 +86,7 @@ public class University_class {
             System.out.println("wait");
         }
 
-        System.out.println("wait");
+//        System.out.println("wait");
     }
     private static void ViewTeachers(ArrayList<Teacher> Teach) {
 
@@ -121,6 +114,7 @@ class Teacher extends Shedule{
     }
     protected void addTeacherShedule() {
         this.TeacherShedule.add(setShedule());
+        System.out.println("Расписание успешно добавлено!");
     }
 }
 
@@ -158,6 +152,7 @@ class Student extends Shedule{
     }
     protected void addStudentShedule() {
         this.StudentShedule.add(setShedule());
+        System.out.println("Расписание успешно добавлено!");
     }
     protected void getStudentShedule(String day_name) {
         for (Map.Entry<String, ArrayList<Map<String, String>>> elem : getLesson().entrySet()) {
